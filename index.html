@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寻莘留学 - Ask & Apply | 专业留学咨询与申请服务</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 引入Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <!-- 配置Tailwind自定义主题 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#07C160', // 改为绿色（匹配提供的Ask & Apply标识颜色）
+            secondary: '#36CFC9',
+            accent: '#722ED1',
+            neutral: '#F5F7FA',
+            dark: '#1D2129',
+          },
+          fontFamily: {
+            inter: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .card-hover {
+        @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+      }
+      .btn-primary {
+        @apply bg-primary text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary/90 hover:shadow-lg;
+      }
+      .btn-outline {
+        @apply border-2 border-primary text-primary px-6 py-3 rounded-lg font-medium transition-all duration-300 hover:bg-primary hover:text-white;
+      }
+    }
+  </style>
+  <!-- 预加载字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-inter text-dark bg-white">
+  <!-- 导航栏 -->
+  <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-sm shadow-sm">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="#" class="flex items-center space-x-2">
+          <span class="text-dark font-semibold text-xl">寻莘留学</span>
+          <span class="text-primary text-2xl font-bold">Ask & Apply</span> <!-- 修正英文名称大小写 -->
+        </a>
+        
+        <!-- 桌面导航 -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="#about" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">关于我们</a>
+          <a href="#services" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">留学服务</a>
+          <a href="#countries" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">热门国家</a>
+          <a href="#process" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">申请流程</a>
+          <a href="#cases" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">成功案例</a>
+          <a href="#contact" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium">联系我们</a>
+        </nav>
+        
+        <!-- 联系按钮 -->
+        <a href="#contact" class="hidden md:inline-block btn-primary">
+          免费咨询
+        </a>
+        
+        <!-- 移动端菜单按钮 -->
+        <button id="menuBtn" class="md:hidden text-dark text-2xl">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobileMenu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none">
+      <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+        <a href="#about" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">关于我们</a>
+        <a href="#services" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">留学服务</a>
+        <a href="#countries" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">热门国家</a>
+        <a href="#process" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">申请流程</a>
+        <a href="#cases" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">成功案例</a>
+        <a href="#contact" class="text-dark/80 hover:text-primary transition-colors duration-300 font-medium py-2">联系我们</a>
+        <a href="#contact" class="btn-primary text-center">
+          免费咨询
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- 英雄区域 -->
+    <section class="pt-32 pb-20 md:pt-40 md:pb-28 bg-gradient-to-b from-white to-neutral">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center">
+          <div class="md:w-1/2 mb-12 md:mb-0">
+            <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold leading-tight text-dark mb-6">
+              开启全球<span class="text-primary">留学</span>之旅
+            </h1>
+            <p class="text-[clamp(1rem,2vw,1.25rem)] text-dark/70 mb-8 max-w-lg">
+              寻莘留学（Ask & Apply）由澳洲名校教育学硕士团队创立，专注于提供从低龄到硕士阶段的全周期留学规划与申请服务，助力学子冲刺世界名校。
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a href="#contact" class="btn-primary text-center">
+                免费评估
+              </a>
+              <a href="#services" class="btn-outline text-center">
+                了解服务
+              </a>
+            </div>
+            <div class="mt-10 flex items-center space-x-6">
+              <div class="flex flex-col">
+                <span class="text-3xl font-bold text-primary">98%</span>
+                <span class="text-dark/60 text-sm">申请成功率</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-3xl font-bold text-primary">5000+</span>
+                <span class="text-dark/60 text-sm">成功案例</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="text-3xl font-bold text-primary">8+年</span>
+                <span class="text-dark/60 text-sm">行业经验</span>
+              </div>
+            </div>
+          </div>
+          <div class="md:w-1/2 relative">
+            <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+              <!-- 替换为悉尼大学风景 -->
+              <img src="https://picsum.photos/id/1036/800/600" alt="悉尼大学风景" class="w-full h-auto">
+            </div>
+            <div class="absolute top-1/4 -left-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 -right-6 w-40 h-40 bg-accent/10 rounded-full blur-3xl"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section id="about" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">关于寻莘留学</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">由澳洲名校硕士团队创立，8年+留学规划经验，专注全周期国际教育服务</p>
+        </div>
+        
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="md:w-1/2">
+            <div class="relative">
+              <!-- 替换为墨尔本大学风景 -->
+              <img src="https://picsum.photos/id/1043/800/600" alt="墨尔本大学风景" class="w-full h-auto rounded-2xl shadow-xl">
+              <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-lg hidden md:block">
+                <div class="flex items-center space-x-3">
+                  <div class="text-primary text-3xl">
+                    <i class="fa fa-trophy"></i>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-dark">名校背景团队</p>
+                    <p class="text-dark/60 text-sm">澳洲教育学硕士领衔</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="md:w-1/2">
+            <h3 class="text-2xl font-bold mb-4">我们的创始团队</h3>
+            <p class="text-dark/70 mb-6">
+              寻莘留学（Ask & Apply）由Camille Li和Lucy Li联合创立。Camille毕业于澳洲莫纳什大学，获得教育学硕士学位；Lucy毕业于悉尼大学，同样取得了教育学硕士学位。
+            </p>
+            <p class="text-dark/70 mb-6">
+              我们在留学规划领域拥有超过8年的丰富经验，曾在多家大型留学机构担任咨询顾问、资深顾问及合伙级顾问等职务，与众多顶尖院校的招生官保持密切沟通，掌握最新的院校动态和录取信息。
+            </p>
+            <p class="text-dark/70 mb-6">
+              我们对澳洲的教育体系、院校情况以及申请流程都非常了解。凭借着对国际教育环境的深入洞察，能够为学生提供专业、个性化的留学规划和申请指导，帮助学生顺利进入理想院校。
+            </p>
+            
+            <div class="space-y-4 mb-8">
+              <div class="flex items-start space-x-3">
+                <div class="text-primary mt-1">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-dark">澳洲顶尖院校录取战绩</h4>
+                  <p class="text-dark/60 text-sm">墨尔本大学、悉尼大学、澳洲国立大学、新南威尔士大学等</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="text-primary mt-1">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-dark">全周期服务体系</h4>
+                  <p class="text-dark/60 text-sm">涵盖3-15岁素质培养、国内国际学校择校、低龄留学、本科/硕士申请、留学后服务全阶段</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <div class="text-primary mt-1">
+                  <i class="fa fa-check-circle"></i>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-dark">个性化教育理念</h4>
+                  <p class="text-dark/60 text-sm">坚持因材施教，挖掘每个学生的独特亮点，打造专属申请方案</p>
+                </div>
+              </div>
+            </div>
+            
+            <a href="#contact" class="btn-primary inline-block">
+              了解更多
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 留学服务 -->
+    <section id="services" class="py-20 bg-neutral">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">全周期留学服务体系</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">从低龄素质培养到硕士申请，从背景提升到实习就业，提供一站式国际教育解决方案</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 服务卡片1 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-child text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">青少年素质能力培养</h3>
+            <p class="text-dark/70 mb-6">
+              针对3-15岁学生，提供多元化素质培训，培养显性知识以外的核心能力。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>语言启蒙、艺术启蒙、创客教育</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>抽象思维、创新能力培养</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>组织协调、自我发展能力提升</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- 服务卡片2 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-book text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">学业规划与语言培训</h3>
+            <p class="text-dark/70 mb-6">
+              提供全面的学业规划和标准化考试培训，为留学申请奠定坚实基础。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>TOEFL、IELTS、GRE、GMAT培训</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>美高在线课程辅导</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>中英文数理逻辑提升</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>中文素养与演讲能力培养</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- 服务卡片3 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-trophy text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">背景提升服务</h3>
+            <p class="text-dark/70 mb-6">
+              丰富学生软实力背景，提升申请竞争力，增加名校录取概率。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>学术科研项目、企业实践实习</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>高端学科竞赛参与指导</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>志愿者服务、学术活动策划</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>名校教授推荐信获取</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- 服务卡片4 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-graduation-cap text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">留学申请服务</h3>
+            <p class="text-dark/70 mb-6">
+              全阶段留学申请服务，从低龄到硕士，提供个性化申请方案。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>低龄留学、国内国际学校择校</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>高中-高中速通计划</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>本科申请、本科VIP服务</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>硕士申请、硕士VIP、招生官对接</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- 服务卡片5 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-life-ring text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">留学后服务</h3>
+            <p class="text-dark/70 mb-6">
+              提供全方位留学后支持，确保学生在海外顺利完成学业、适应生活。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>选课指导、GPA提升规划</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>360度学业与生活跟踪服务</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>留学保险、海外救援服务</span>
+              </li>
+            </ul>
+          </div>
+          
+          <!-- 服务卡片6 -->
+          <div class="bg-white rounded-2xl p-8 shadow-lg card-hover">
+            <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <i class="fa fa-briefcase text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">实习就业服务</h3>
+            <p class="text-dark/70 mb-6">
+              连接名校与名企资源，帮助学生提升职场竞争力，实现顺利就业。
+            </p>
+            <ul class="space-y-2 mb-6">
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>竞争力测评、求职规划</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>就业辅导、名企直推机会</span>
+              </li>
+              <li class="flex items-center space-x-2 text-dark/60">
+                <i class="fa fa-angle-right text-primary"></i>
+                <span>简历定制、面试辅导培训</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- 特色项目 -->
+        <div class="mt-16 bg-white rounded-2xl shadow-lg p-8">
+          <h3 class="text-2xl font-bold mb-8 text-center">特色旗舰项目</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="border border-gray-100 rounded-xl p-6 card-hover">
+              <div class="text-primary text-2xl mb-4">
+                <i class="fa fa-rocket"></i>
+              </div>
+              <h4 class="text-lg font-bold mb-2">澳洲精英中学计划</h4>
+              <p class="text-dark/70">
+                针对澳洲顶尖私立中学的专属申请通道，提供学术准备、面试辅导、寄宿家庭安排全流程服务。
+              </p>
+            </div>
+            <div class="border border-gray-100 rounded-xl p-6 card-hover">
+              <div class="text-primary text-2xl mb-4">
+                <i class="fa fa-star"></i>
+              </div>
+              <h4 class="text-lg font-bold mb-2">国际菁英规划</h4>
+              <p class="text-dark/70">
+                低龄规划指导、艺术思维养成、人文艺术领导力培养，全方位打造国际人才。
+              </p>
+            </div>
+            <div class="border border-gray-100 rounded-xl p-6 card-hover">
+              <div class="text-primary text-2xl mb-4">
+                <i class="fa fa-globe"></i>
+              </div>
+              <h4 class="text-lg font-bold mb-2">澳洲高等教育计划</h4>
+              <p class="text-dark/70">
+                整合澳洲八大优质教育资源，提供学术能力规划、软实力提升、名校申请全链条服务。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 热门留学国家 -->
+    <section id="countries" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">热门留学国家</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">我们提供全球主要留学目的地的专业服务，尤其擅长澳洲、英美等国家的申请规划</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- 美国 -->
+          <div class="relative rounded-2xl overflow-hidden group card-hover">
+            <img src="https://picsum.photos/id/101/600/400" alt="美国留学" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-white text-xl font-bold mb-2">美国</h3>
+              <p class="text-white/80 text-sm mb-4">常春藤盟校，世界顶尖教育体系，爬藤计划重点覆盖</p>
+              <div class="flex items-center space-x-4">
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">本科申请</span>
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">研究生申请</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 英国 -->
+          <div class="relative rounded-2xl overflow-hidden group card-hover">
+            <img src="https://picsum.photos/id/1031/600/400" alt="英国留学" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-white text-xl font-bold mb-2">英国</h3>
+              <p class="text-white/80 text-sm mb-4">牛津、帝国理工等名校，一年制硕士，文凭认可度高</p>
+              <div class="flex items-center space-x-4">
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">本科申请</span>
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">研究生申请</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 澳大利亚 -->
+          <div class="relative rounded-2xl overflow-hidden group card-hover">
+            <!-- 替换为墨尔本风景 -->
+            <img src="https://picsum.photos/id/1039/600/400" alt="澳大利亚留学" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-white text-xl font-bold mb-2">澳大利亚</h3>
+              <p class="text-white/80 text-sm mb-4">八大名校优势明显，创始团队澳洲背景，申请经验丰富</p>
+              <div class="flex items-center space-x-4">
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">中学申请</span>
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">大学申请</span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- 加拿大 -->
+          <div class="relative rounded-2xl overflow-hidden group card-hover">
+            <img src="https://picsum.photos/id/1019/600/400" alt="加拿大留学" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex flex-col justify-end p-6">
+              <h3 class="text-white text-xl font-bold mb-2">加拿大</h3>
+              <p class="text-white/80 text-sm mb-4">多元文化，友好社会环境，留学移民政策宽松</p>
+              <div class="flex items-center space-x-4">
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">本科申请</span>
+                <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">研究生申请</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <a href="#contact" class="btn-outline inline-block">
+            查看更多国家 <i class="fa fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 申请流程 -->
+    <section id="process" class="py-20 bg-neutral">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">留学申请流程</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">我们为你提供清晰的留学申请步骤指导，让整个申请过程透明、高效、无忧</p>
+        </div>
+        
+        <div class="relative">
+          <!-- 流程线 -->
+          <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-primary/20 transform -translate-x-1/2"></div>
+          
+          <div class="space-y-12 md:space-y-0 relative">
+            <!-- 步骤1 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                <h3 class="text-xl font-bold mb-2">初步咨询评估</h3>
+                <p class="text-dark/70">
+                  我们的专业顾问会与你进行深入沟通，了解学生的学术背景、兴趣特长、职业规划，提供专业的留学评估和方向建议。
+                </p>
+              </div>
+              <div class="md:w-12 flex justify-center order-1 md:order-2 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">1</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3"></div>
+            </div>
+            
+            <!-- 步骤2 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 order-2"></div>
+              <div class="md:w-12 flex justify-center order-1 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">2</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3">
+                <h3 class="text-xl font-bold mb-2">制定个性化方案</h3>
+                <p class="text-dark/70">
+                  根据评估结果，结合学生特点和家庭需求，制定专属留学规划方案，包括院校选择、时间规划、背景提升计划等。
+                </p>
+              </div>
+            </div>
+            
+            <!-- 步骤3 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                <h3 class="text-xl font-bold mb-2">背景提升执行</h3>
+                <p class="text-dark/70">
+                  协助学生参与学术科研、竞赛、实习等背景提升项目，丰富软实力，提升申请竞争力。
+                </p>
+              </div>
+              <div class="md:w-12 flex justify-center order-1 md:order-2 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">3</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3"></div>
+            </div>
+            
+            <!-- 步骤4 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 order-2"></div>
+              <div class="md:w-12 flex justify-center order-1 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">4</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3">
+                <h3 class="text-xl font-bold mb-2">申请材料准备</h3>
+                <div class="text-dark/70">
+                  专业文书团队打造个性化申请材料，包括个人陈述、推荐信、简历等，指导学生准备成绩单、语言成绩等硬性材料。
+                </div>
+              </div>
+            </div>
+            
+            <!-- 步骤5 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 md:text-right order-2 md:order-1">
+                <h3 class="text-xl font-bold mb-2">院校申请提交</h3>
+                <p class="text-dark/70">
+                  按照院校要求和申请时间表，提交院校申请，全程跟踪申请进度，及时反馈院校回复和沟通跟进。
+                </p>
+              </div>
+              <div class="md:w-12 flex justify-center order-1 md:order-2 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">5</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3"></div>
+            </div>
+            
+            <!-- 步骤6 -->
+            <div class="flex flex-col md:flex-row items-center">
+              <div class="md:w-1/2 md:pr-12 order-2"></div>
+              <div class="md:w-12 flex justify-center order-1 mb-6 md:mb-0">
+                <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg z-10 shadow-lg">6</div>
+              </div>
+              <div class="md:w-1/2 md:pl-12 order-3">
+                <h3 class="text-xl font-bold mb-2">录取确认与行前准备</h3>
+                <p class="text-dark/70">
+                  协助学生选择录取院校，办理签证、住宿、机票等事宜，提供行前培训和留学后服务对接，确保顺利入学。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 成功案例 -->
+    <section id="cases" class="py-20 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">成功案例</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">我们帮助众多学生实现了澳洲留学梦想，以下是部分成功案例分享</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- 案例1 - Scots College -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 card-hover">
+            <div class="flex items-center mb-6">
+              <img src="https://picsum.photos/id/1005/100/100" alt="学生照片" class="w-16 h-16 rounded-full object-cover mr-4">
+              <div>
+                <h3 class="font-bold text-lg">陈同学 - Scots College</h3>
+                <p class="text-dark/60 text-sm">悉尼男校 9年级</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3">原学校：上海某国际学校</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">雅思：6.0</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">录取年份：2024</span>
+            </div>
+            <p class="text-dark/70 mb-6">
+              "非常感谢寻莘团队的帮助，从准备申请材料到面试辅导都非常专业。Scots College一直是我的梦想学校，顾问针对学校特点为我设计了个性化的申请方案，最终成功拿到录取！"
+            </p>
+            <div class="flex items-center text-yellow-400">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+          </div>
+          
+          <!-- 案例2 - Wenona School -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 card-hover">
+            <div class="flex items-center mb-6">
+              <img src="https://picsum.photos/id/1000/100/100" alt="学生照片" class="w-16 h-16 rounded-full object-cover mr-4">
+              <div>
+                <h3 class="font-bold text-lg">林同学 - Wenona School</h3>
+                <p class="text-dark/60 text-sm">悉尼女校 10年级</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3">原学校：北京某私立中学</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">雅思：6.5</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">录取年份：2024</span>
+            </div>
+            <p class="text-dark/70 mb-6">
+              "Wenona的申请竞争很激烈，特别感谢寻莘团队帮助我突出了舞蹈特长和社区服务经历。面试前的模拟训练让我充满信心，最终成功获得了这所百年女校的录取通知书。"
+            </p>
+            <div class="flex items-center text-yellow-400">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+          </div>
+          
+          <!-- 案例3 - MLC Melbourne -->
+          <div class="bg-white rounded-2xl shadow-lg p-8 border border-gray-100 card-hover">
+            <div class="flex items-center mb-6">
+              <img src="https://picsum.photos/id/1012/100/100" alt="学生照片" class="w-16 h-16 rounded-full object-cover mr-4">
+              <div>
+                <h3 class="font-bold text-lg">张同学 - MLC Melbourne</h3>
+                <p class="text-dark/60 text-sm">墨尔本女校 11年级</p>
+              </div>
+            </div>
+            <div class="mb-4">
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3">原学校：广州某双语学校</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">雅思：7.0</span>
+              <span class="inline-block bg-primary/10 text-primary text-xs px-3 py-1 rounded-full mb-3 ml-2">录取年份：2023</span>
+            </div>
+            <p class="text-dark/70 mb-6">
+              "MLC的科学课程非常有名，寻莘的顾问帮我准备了丰富的科学竞赛经历和研究项目展示。他们对澳洲中学教育体系的了解让申请过程非常顺利，现在我已经适应了墨尔本的学习生活。"
+            </p>
+            <div class="flex items-center text-yellow-400">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 澳洲顶尖私立中学成功案例 -->
+        <div class="mt-20 bg-neutral rounded-2xl p-8 md:p-12">
+          <h3 class="text-2xl font-bold mb-8 text-center">澳洲顶尖私立中学申请成功案例</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Scots College -->
+            <div class="bg-white rounded-xl p-6 shadow-md card-hover">
+              <div class="h-40 rounded-lg overflow-hidden mb-4">
+                <img src="https://picsum.photos/id/1059/400/300" alt="Scots College" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-bold text-lg mb-2">Scots College（悉尼男校）</h4>
+              <p class="text-dark/70 text-sm mb-3">
+                创立于1893年，悉尼最负盛名的私立男校之一，学术成绩优异，注重全人教育。
+              </p>
+              <div class="flex items-center text-primary text-sm">
+                <span>2024年录取：12人</span>
+                <i class="fa fa-arrow-right ml-2"></i>
+              </div>
+            </div>
+            
+            <!-- Wenona School -->
+            <div class="bg-white rounded-xl p-6 shadow-md card-hover">
+              <div class="h-40 rounded-lg overflow-hidden mb-4">
+                <img src="https://picsum.photos/id/1062/400/300" alt="Wenona School" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-bold text-lg mb-2">Wenona School（悉尼女校）</h4>
+              <p class="text-dark/70 text-sm mb-3">
+                创立于1886年，悉尼著名女校，以优质学术和丰富的课外活动著称。
+              </p>
+              <div class="flex items-center text-primary text-sm">
+                <span>2024年录取：9人</span>
+                <i class="fa fa-arrow-right ml-2"></i>
+              </div>
+            </div>
+            
+            <!-- MLC Melbourne -->
+            <div class="bg-white rounded-xl p-6 shadow-md card-hover">
+              <div class="h-40 rounded-lg overflow-hidden mb-4">
+                <img src="https://picsum.photos/id/1066/400/300" alt="MLC Melbourne" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-bold text-lg mb-2">MLC Melbourne（墨尔本女校）</h4>
+              <p class="text-dark/70 text-sm mb-3">
+                创立于1882年，墨尔本顶尖女校，在科学、艺术和体育方面均有卓越表现。
+              </p>
+              <div class="flex items-center text-primary text-sm">
+                <span>2024年录取：15人</span>
+                <i class="fa fa-arrow-right ml-2"></i>
+              </div>
+            </div>
+            
+            <!-- St Leonards College -->
+            <div class="bg-white rounded-xl p-6 shadow-md card-hover">
+              <div class="h-40 rounded-lg overflow-hidden mb-4">
+                <img src="https://picsum.photos/id/1071/400/300" alt="St Leonards College" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-bold text-lg mb-2">St Leonards College（混校）</h4>
+              <p class="text-dark/70 text-sm mb-3">
+                创立于1914年，墨尔本知名混校，注重创新教育和国际视野培养。
+              </p>
+              <div class="flex items-center text-primary text-sm">
+                <span>2024年录取：11人</span>
+                <i class="fa fa-arrow-right ml-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section id="contact" class="py-20 bg-gradient-to-br from-primary/5 to-accent/5">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-[clamp(1.8rem,3vw,2.5rem)] font-bold text-dark mb-4">联系我们</h2>
+          <p class="text-dark/70 max-w-2xl mx-auto">填写下方表单或通过以下方式联系我们，我们的顾问将尽快与你取得联系，为你提供专业的留学咨询服务</p>
+        </div>
+        
+        <div class="flex flex-col lg:flex-row gap-12">
+          <div class="lg:w-1/2">
+            <form class="bg-white rounded-2xl shadow-lg p-8">
+              <div class="mb-6">
+                <label for="name" class="block text-dark font-medium mb-2">姓名</label>
+                <input type="text" id="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入你的姓名">
+              </div>
+              <div class="mb-6">
+                <label for="phone" class="block text-dark font-medium mb-2">电话</label>
+                <input type="tel" id="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入你的电话">
+              </div>
+              <div class="mb-6">
+                <label for="email" class="block text-dark font-medium mb-2">邮箱</label>
+                <input type="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请输入你的邮箱">
+              </div>
+              <div class="mb-6">
+                <label for="country" class="block text-dark font-medium mb-2">意向国家</label>
+                <select id="country" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300">
+                  <option value="">请选择意向国家</option>
+                  <option value="usa">美国</option>
+                  <option value="uk">英国</option>
+                  <option value="canada">加拿大</option>
+                  <option value="australia" selected>澳大利亚</option>
+                  <option value="newzealand">新西兰</option>
+                  <option value="europe">欧洲</option>
+                  <option value="other">其他国家</option>
+                </select>
+              </div>
+              <div class="mb-6">
+                <label for="stage" class="block text-dark font-medium mb-2">申请阶段</label>
+                <select id="stage" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300">
+                  <option value="">请选择申请阶段</option>
+                  <option value="primary">低龄留学</option>
+                  <option value="highschool" selected>高中</option>
+                  <option value="undergraduate">本科</option>
+                  <option value="graduate">硕士</option>
+                  <option value="phd">博士</option>
+                </select>
+              </div>
+              <div class="mb-6">
+                <label for="message" class="block text-dark font-medium mb-2">留言</label>
+                <textarea id="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300" placeholder="请简要描述你的留学需求"></textarea>
+              </div>
+              <button type="submit" class="w-full btn-primary">
+                提交咨询
+              </button>
+            </form>
+          </div>
+          
+          <div class="lg:w-1/2">
+            <div class="bg-white rounded-2xl shadow-lg p-8 h-full">
+              <h3 class="text-2xl font-bold mb-8">联系方式</h3>
+              
+              <div class="space-y-6 mb-12">
+                <div class="flex items-start space-x-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-1">
+                    <i class="fa fa-map-marker text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-dark mb-1">公司地址</h4>
+                    <p class="text-dark/70">上海市静安区汶水路451号1308室</p>
+                    <p class="text-dark/70">邮编: 200436</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-1">
+                    <i class="fa fa-phone text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-dark mb-1">咨询电话</h4>
+                    <p class="text-dark/70">(86) 15921905588</p>
+                  </div>
+                </div>
+
+                <!-- 添加联系微信 -->
+                <div class="flex items-start space-x-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-1">
+                    <i class="fa fa-weixin text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-dark mb-1">联系微信</h4>
+                    <p class="text-dark/70">15921905588</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-1">
+                    <i class="fa fa-envelope-o text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-dark mb-1">电子邮箱</h4>
+                    <p class="text-dark/70">camille@askapplyedu.com</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-start space-x-4">
+                  <div class="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mt-1">
+                    <i class="fa fa-clock-o text-primary"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-dark mb-1">工作时间</h4>
+                    <p class="text-dark/70">周一至周五: 9:00 - 18:00</p>
+                    <p class="text-dark/70">周六: 10:00 - 16:00 (预约制)</p>
+                  </div>
+                </div>
+              </div>
+              
+              <h4 class="font-semibold text-dark mb-4">关注我们</h4>
+              <div class="flex space-x-4 mb-8">
+                <a href="#" class="w-10 h-10 bg-[#1DA1F2]/10 rounded-full flex items-center justify-center text-[#1DA1F2] transition-all duration-300 hover:bg-[#1DA1F2] hover:text-white">
+                  <i class="fa fa-twitter"></i>
+                </a>
+                <a href="#" class="w-10 h
